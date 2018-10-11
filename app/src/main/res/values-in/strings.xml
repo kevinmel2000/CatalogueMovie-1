@@ -1,0 +1,27 @@
+<resources>
+    <string name="app_name">Katalog Film</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Katalog Film</string>
+    <string name="nav_header_subtitle">Katalog Film Aplikasi</string>
+    <string name="nav_header_desc">Navigation header</string>
+
+    <!--tambahan-->
+    <string name="upcoming">Akan Tayang</string>
+    <string name="now_playing">Sedang diputar</string>
+    <string name="search_hint">Cari Film</string>
+
+    <string name="detail">Detail</string>
+    <string name="share">Bagikan</string>
+
+    <string name="content_image_film">Gambar Film</string>
+    <string name="text_judul_film">Judul</string>
+    <string name="text_desk_film">Deskripsi</string>
+    <string name="text_rilis_film">Waktu Rilis</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="menu1">cari</string>
+    <string name="menu_2">ubah bahasa</string>
+    <string name="about">Tentang</string>
+    <string name="hint_nama">Muhammad Mu\'adz</string>
+</resources>

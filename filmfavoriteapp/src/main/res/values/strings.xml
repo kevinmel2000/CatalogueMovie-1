@@ -1,0 +1,29 @@
+<resources>
+    <string name="app_name">Catalogue Movie</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Catalogue Movie</string>
+    <string name="nav_header_subtitle">Catalogue Movie Application</string>
+    <string name="nav_header_desc">Navigation header</string>
+
+    <!--tambahan-->
+    <string name="upcoming">Upcoming</string>
+    <string name="now_playing">Now Playing</string>
+    <string name="search_hint">Search Movie</string>
+
+    <string name="detail">Detail</string>
+    <string name="share">Share</string>
+
+    <string name="content_image_film">Image Movie</string>
+    <string name="text_judul_film">Title</string>
+    <string name="text_desk_film">Description</string>
+    <string name="text_rilis_film">Release Date</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="menu1">search</string>
+    <string name="menu_2">change languange setting</string>
+    <string name="about">About</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hint_nama">Muhammad Mu\'adz</string>
+</resources>
