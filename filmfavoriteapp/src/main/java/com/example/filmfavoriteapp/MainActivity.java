@@ -45,10 +45,10 @@ public class MainActivity extends AppCompatActivity
 
         navView.setNavigationItemSelectedListener(this);
 
-        FavoriteFilmFragment nowPlayingFragment = new FavoriteFilmFragment();
+        /*FavoriteFilmFragment nowPlayingFragment = new FavoriteFilmFragment();
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.framelayout, nowPlayingFragment);
-        fragmentTransaction.commit();
+        fragmentTransaction.commit();*/
         /*setupViewPager(viewPager);
         tabs.setupWithViewPager(viewPager);*/
 

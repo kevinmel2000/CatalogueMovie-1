@@ -10,13 +10,11 @@ import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
 import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.example.filmfavoriteapp.Adapter.MovieCursorAdapter;
@@ -40,10 +38,12 @@ public class FavoriteFilmFragment extends Fragment implements
     Unbinder unbinder;
 
     @BindView(R.id.recycler_favorite)
-    RecyclerView recyclerView;
+    RecyclerView recyclerViewMovieFavorite;
+    /*@BindView(R.id.lv_movies)
+    ListView lvMovies;*/
 
-    MovieCursorAdapter adapter;
-    ArrayList<MovieCursorItems> movieFavorites;
+    MovieCursorAdapter adapterFavorite;
+    ArrayList<MovieCursorItems> movieFavoritesArrayList;
 
     private final int MOVIE_ID = 110;
 
@@ -58,10 +58,16 @@ public class FavoriteFilmFragment extends Fragment implements
         View view = inflater.inflate(R.layout.fragment_favorite_film, container, false);
         unbinder = ButterKnife.bind(this, view);
 
-        adapter = new MovieCursorAdapter(getContext(), null, true);
-        recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 3));
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setItemAnimator(new DefaultItemAnimator());
+        recyclerViewMovieFavorite = view.findViewById(R.id.recycler_favorite);
+        adapterFavorite = new MovieCursorAdapter(getContext(), null, true);
+        recyclerViewMovieFavorite.setLayoutManager(new LinearLayoutManager(getContext()));
+//        recyclerViewMovieFavorite.setAdapter(adapterFavorite);
+        recyclerViewMovieFavorite.setHasFixedSize(true);
+        recyclerViewMovieFavorite.setItemAnimator(new DefaultItemAnimator());
+
+        /*lvMovies = view.findViewById(R.id.lv_movies);
+        adapterFavorite = new MovieCursorAdapter(getContext(), null, true);
+        lvMovies.setAdapter(adapterFavorite);*/
 
         getActivity().getSupportLoaderManager().initLoader(MOVIE_ID, null, this);
         return view;
@@ -70,20 +76,20 @@ public class FavoriteFilmFragment extends Fragment implements
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        unbinder.unbind();
+        getActivity().getSupportLoaderManager().destroyLoader(MOVIE_ID);
+        /*unbinder.unbind();*/
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        getActivity().getSupportLoaderManager().restartLoader(0, null, this);
+        getActivity().getSupportLoaderManager().restartLoader(MOVIE_ID, null, this);
     }
 
 
     @NonNull
     @Override
-    public Loader<Cursor> onCreateLoader(int i, @Nullable Bundle bundle) {
-        movieFavorites = new ArrayList<>();
+    public Loader<Cursor> onCreateLoader(int id, @Nullable Bundle bundle) {
         return new CursorLoader(getContext(), CONTENT_URI,
                 null, null, null, null);
     }
@@ -91,18 +97,20 @@ public class FavoriteFilmFragment extends Fragment implements
 
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
-        movieFavorites = getItem(data);
-        for (MovieCursorItems m : movieFavorites) {
+        adapterFavorite.swapCursor(data);
+
+        /*movieFavoritesArrayList = getItem(data);
+        for (MovieCursorItems m : movieFavoritesArrayList) {
             getFavoriteMovies(m.getId());
-            adapter.notifyDataSetChanged();
-            Log.v("Matt1", "List"+movieFavorites.size());
-        }
+            adapterFavorite.notifyDataSetChanged();
+            Log.v("Matt1", "List"+movieFavoritesArrayList.size());
+        }*/
     }
 
 
     @Override
     public void onLoaderReset(Loader<Cursor> loader) {
-        movieCursorAdapter.swapCursor(null);
+        adapterFavorite.swapCursor(null);
     }
 
 

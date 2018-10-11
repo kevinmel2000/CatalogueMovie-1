@@ -6,15 +6,15 @@ import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 
-import com.example.muas.cataloguemovie.Model.MovieItems;
+import com.example.muas.cataloguemovie.Model.FavoriteModel;
 
 import java.util.ArrayList;
 
 import static android.provider.BaseColumns._ID;
 import static com.example.muas.cataloguemovie.Database.DatabaseContract.FilmColumns.DESKRIPSI;
-import static com.example.muas.cataloguemovie.Database.DatabaseContract.FilmColumns.FAVORITE_FILM;
 import static com.example.muas.cataloguemovie.Database.DatabaseContract.FilmColumns.JUDUL;
 import static com.example.muas.cataloguemovie.Database.DatabaseContract.FilmColumns.RELEASE;
+import static com.example.muas.cataloguemovie.Database.DatabaseContract.FilmColumns.TABLE_FAVORITE_FILM;
 import static com.example.muas.cataloguemovie.Database.DatabaseContract.FilmColumns.URL_POSTER;
 
 /**
@@ -23,6 +23,7 @@ import static com.example.muas.cataloguemovie.Database.DatabaseContract.FilmColu
 
 public class FavoriteFilmHelper {
 
+    private static String DATABASE_TABLE = TABLE_FAVORITE_FILM;
     private Context context;
     private DatabaseHelper dataBaseHelper;
 
@@ -38,13 +39,9 @@ public class FavoriteFilmHelper {
         return this;
     }
 
-    public void close() {
-        dataBaseHelper.close();
-    }
-
-    public ArrayList<MovieItems> getAllDataEng() {
-        ArrayList<MovieItems> arrayList = new ArrayList<MovieItems>();
-        Cursor cursor = database.query(FAVORITE_FILM,
+    public ArrayList<FavoriteModel> query() {
+        ArrayList<FavoriteModel> arrayList = new ArrayList<FavoriteModel>();
+        Cursor cursor = database.query(DATABASE_TABLE,
                 null,
                 null,
                 null,
@@ -54,10 +51,10 @@ public class FavoriteFilmHelper {
                 null);
         cursor.moveToFirst();
 
-        MovieItems filmModel;
+        FavoriteModel filmModel;
         if (cursor.getCount() > 0) {
             do {
-                filmModel = new MovieItems();
+                filmModel = new FavoriteModel();
                 filmModel.setId(cursor.getInt(cursor.getColumnIndexOrThrow(_ID)));
                 filmModel.setOriginal_title(cursor.getString(cursor.getColumnIndexOrThrow(JUDUL)));
                 filmModel.setOverview(cursor.getString(cursor.getColumnIndexOrThrow(DESKRIPSI)));
@@ -66,37 +63,15 @@ public class FavoriteFilmHelper {
 
                 arrayList.add(filmModel);
                 cursor.moveToNext();
+
             } while (!cursor.isAfterLast());
         }
         cursor.close();
         return arrayList;
     }
 
-    public long insert(MovieItems items) {
-        ContentValues contentValues = new ContentValues();
-        contentValues.put(JUDUL, items.getOriginal_title());
-        contentValues.put(DESKRIPSI, items.getOverview());
-        contentValues.put(RELEASE, items.getRelease_date());
-        contentValues.put(URL_POSTER, items.getPoster_path());
-        return database.insert(FAVORITE_FILM, null, contentValues);
-    }
-
-    public int update(MovieItems items) {
-        ContentValues values = new ContentValues();
-        values.put(JUDUL, items.getOriginal_title());
-        values.put(DESKRIPSI, items.getOverview());
-        values.put(RELEASE, items.getRelease_date());
-        values.put(URL_POSTER, items.getPoster_path());
-        return database.update(FAVORITE_FILM, values, _ID + "= '" + items.getId()
-                + "'", null);
-    }
-
-    public int delete(int id) {
-        return database.delete(FAVORITE_FILM, _ID + "= '" + id + "'", null);
-    }
-
     public Cursor queyByIdProvider(String id) {
-        return database.query(FAVORITE_FILM, null
+        return database.query(DATABASE_TABLE, null
                 , _ID + " = ?"
                 , new String[]{id}
                 , null
@@ -106,7 +81,7 @@ public class FavoriteFilmHelper {
     }
 
     public Cursor queryProvider() {
-        return database.query(FAVORITE_FILM
+        return database.query(DATABASE_TABLE
                 , null
                 , null
                 , null
@@ -116,96 +91,14 @@ public class FavoriteFilmHelper {
     }
 
     public long insertProvider(ContentValues values) {
-        return database.insert(FAVORITE_FILM, null, values);
+        return database.insert(DATABASE_TABLE, null, values);
     }
 
     public int updateProvider(String id, ContentValues values) {
-        return database.update(FAVORITE_FILM, values, _ID + " = ?", new String[]{id});
+        return database.update(DATABASE_TABLE, values, _ID + " = ?", new String[]{id});
     }
 
     public int deleteProvider(String id) {
-        return database.delete(FAVORITE_FILM, _ID + " = ?", new String[]{id});
+        return database.delete(DATABASE_TABLE, _ID + " = ?", new String[]{id});
     }
-
-
-    /*public void beginTransaction(){
-        database.beginTransaction();
-    }
-
-    public void setTransactionSuccess(){
-        database.setTransactionSuccessful();
-    }
-
-    public void endTransaction(){
-        database.endTransaction();
-    }
-
-    public void insertTransactionEng(MovieItems film){
-        String sql = "INSERT INTO "+FAVORITE_FILM+" ("+JUDUL+", "+DESKRIPSI
-                +", "+RELEASE+", "+URL_POSTER+") VALUES (?,?,?,?)";
-        SQLiteStatement stmt = database.compileStatement(sql);
-        stmt.bindString(1, film.getOriginal_title());
-        stmt.bindString(2, film.getOverview());
-        stmt.bindString(3, film.getRelease_date());
-        stmt.bindString(4, film.getRelease_date());
-        stmt.execute();
-        stmt.clearBindings();
-    }
-
-    public boolean checkData(String title){
-        Cursor cursor = database.query(FAVORITE_FILM,null,JUDUL+" LIKE ?",new String[]{title},null,null,_ID + " ASC",null);
-        cursor.moveToFirst();
-        if (cursor.getCount()>0){
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    public int updateEng(MovieItems film){
-        ContentValues args = new ContentValues();
-        args.put(JUDUL, film.getOriginal_title());
-        args.put(DESKRIPSI, film.getOverview());
-        args.put(RELEASE, film.getRelease_date());
-        args.put(URL_POSTER, film.getPoster_path());
-        return database.update(FAVORITE_FILM, args, _ID+"= '"+film.getId()+"'", null);
-    }
-
-    public int deleteEng(int id){
-        return database.delete(FAVORITE_FILM, _ID+" = '"+id+"'", null);
-    }
-
-    public Cursor queryByIdProvider(String id){
-        return database.query(FAVORITE_FILM, null,
-                _ID+" = ?",
-                new String[]{id},
-                null,
-                null,
-                null,
-                null);
-    }
-
-
-
-    public Cursor queryProvider(){
-        return database.query(FAVORITE_FILM,
-                null,
-                null,
-                null,
-                null,
-                null,
-                _ID+" DESC");
-    }
-
-    public long insertProvider(ContentValues values){
-        return database.insert(FAVORITE_FILM,null, values);
-    }
-
-    public int updateProvider(String id, ContentValues values){
-        return database.update(FAVORITE_FILM, values, _ID+" =?", new String[]{id});
-    }
-
-    public int deleteProvider(String id){
-        return database.delete(FAVORITE_FILM, _ID+" = ?", new String[]{id});
-    }*/
 }

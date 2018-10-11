@@ -4,6 +4,7 @@ package com.example.muas.cataloguemovie.ui.Fragment;
 import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -11,7 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.muas.cataloguemovie.Adapter.MovieCursorAdapter;
+import com.example.muas.cataloguemovie.Adapter.FavoriteAdapter;
 import com.example.muas.cataloguemovie.R;
 
 import butterknife.BindView;
@@ -30,8 +31,8 @@ public class FavoriteFilmFragment extends Fragment {
     @BindView(R.id.rv_filmFavorit)
     RecyclerView rv_favorite;
 
-    private Cursor list;
-    private MovieCursorAdapter adapter;
+    private Cursor listFavorite;
+    private FavoriteAdapter adapter;
 
     public FavoriteFilmFragment() {
         // Required empty public constructor
@@ -44,13 +45,12 @@ public class FavoriteFilmFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_favorite_film, container, false);
         unbinder = ButterKnife.bind(this, view);
 
-
         rv_favorite = (RecyclerView) view.findViewById(R.id.rv_filmFavorit);
         rv_favorite.setLayoutManager(new LinearLayoutManager(getContext()));
         rv_favorite.setHasFixedSize(true);
 
-        adapter = new MovieCursorAdapter(getContext());
-        adapter.setListFavorit(list);
+        adapter = new FavoriteAdapter(getContext());
+        adapter.setListFavorite(listFavorite);
         rv_favorite.setAdapter(adapter);
 
         new loadDataAsync().execute();
@@ -68,7 +68,7 @@ public class FavoriteFilmFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        new loadDataAsync().execute();
+//        new loadDataAsync().execute();
     }
 
     private class loadDataAsync extends AsyncTask<Void, Void, Cursor> {
@@ -88,10 +88,18 @@ public class FavoriteFilmFragment extends Fragment {
         protected void onPostExecute(Cursor cursor) {
             super.onPostExecute(cursor);
 
-            list = cursor;
-            adapter.setListFavorit(list);
+            listFavorite = cursor;
+            adapter.setListFavorite(listFavorite);
             adapter.notifyDataSetChanged();
+
+            if (listFavorite.getCount() == 0) {
+                showSnackbarMessage("Tidak ada data saat ini");
+            }
         }
+    }
+
+    private void showSnackbarMessage(String message) {
+        Snackbar.make(rv_favorite, message, Snackbar.LENGTH_SHORT).show();
     }
 
 }

@@ -5,16 +5,14 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.muas.cataloguemovie.Database.DatabaseContract;
-import com.example.muas.cataloguemovie.Model.MovieCursorItems;
-import com.example.muas.cataloguemovie.Model.MovieItems;
 import com.example.muas.cataloguemovie.R;
 
 import butterknife.BindView;
@@ -34,9 +32,13 @@ public class DetailMovieActivity extends AppCompatActivity {
     TextView tvDetailRilisFilm;
     @BindView(R.id.iv_favorit)
     ImageView imageViewFavorit;
+    @BindView(R.id.button2)
+    Button buttonFavorite;
     private Boolean isFavorite = false;
 
-    MovieCursorItems items;
+    private long id;
+
+    String img, judul, desc, tgl;
 
     String iniID;
     String judulnya;
@@ -58,19 +60,14 @@ public class DetailMovieActivity extends AppCompatActivity {
 
         /*memanggil metode getIntentData()*/
         getIntentData();
+        setFavorite();
 
-        imageViewFavorit.setOnClickListener(new View.OnClickListener() {
+        /*imageViewFavorit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (isFavorite)
-                    FavoriteRemove();
-                else
-                    FavoriteSave();
-
-                isFavorite = !isFavorite;
-                favoriteSet();
+                favorite(view);
             }
-        });
+        });*/
 
 
         ButterKnife.bind(this);
@@ -80,17 +77,66 @@ public class DetailMovieActivity extends AppCompatActivity {
     /*metode ini digunakan untuk menerima data yang dikirim dari MainActivity
     * berdasarkan RecyclerView yang diklik*/
     private void getIntentData(){
-        imgPath = "http://image.tmdb.org/t/p/w185"+getIntent().getStringExtra("backdrop");
-        Glide.with(this)
+
+        img = getIntent().getStringExtra("backdrop");
+        judul = getIntent().getStringExtra("title");
+        desc = getIntent().getStringExtra("overview");
+        tgl = getIntent().getStringExtra("release");
+
+        imgPath = "http://image.tmdb.org/t/p/w185"+img;
+        Glide.with(getApplicationContext())
                 .load(imgPath)
                 .into(ivDetailGambarFilm);
-        tvDetailJudulFilm.setText(getIntent().getStringExtra("title"));
-        tvDetailRilisFilm.setText(getIntent().getStringExtra("release"));
-        tvDetailDeskFilm.setText(getIntent().getStringExtra("overview"));
-        iniID = getIntent().getStringExtra("_ID");
+        tvDetailJudulFilm.setText(judul);
+        tvDetailRilisFilm.setText(tgl);
+        tvDetailDeskFilm.setText(desc);
+//        iniID = getIntent().getStringExtra("_ID");
+        imageViewFavorit.setImageResource(R.drawable.ic_star_favorite_unchecked_24dp);
     }
 
-    private void favoriteSet() {
+    public boolean setFavorite(){
+        Uri uri = Uri.parse(CONTENT_URI+"");
+        boolean favorite = false;
+        Cursor cursor = getContentResolver().query(uri, null, null, null, null);
+
+        String getTitle;
+        if (cursor.moveToFirst()) {
+            do {
+                id = cursor.getLong(0);
+                getTitle = cursor.getString(1);
+                if (getTitle.equals(getIntent().getStringExtra("title"))){
+                    imageViewFavorit.setImageResource(R.drawable.ic_star_favorite_24dp);
+                    favorite = true;
+                }
+            } while (cursor.moveToNext());
+
+        }
+
+        return favorite;
+
+    }
+
+    public void favorite (View view) {
+        if(setFavorite()){
+            Uri uri = Uri.parse(CONTENT_URI+"/"+id);
+            getContentResolver().delete(uri, null, null);
+            imageViewFavorit.setImageResource(R.drawable.ic_star_favorite_unchecked_24dp);
+        }
+        else{
+            ContentValues values = new ContentValues();
+            values.put(DatabaseContract.FilmColumns.JUDUL, judul);
+            values.put(DatabaseContract.FilmColumns.URL_POSTER, img);
+            values.put(DatabaseContract.FilmColumns.RELEASE, tgl);
+            values.put(DatabaseContract.FilmColumns.DESKRIPSI, desc);
+
+            getContentResolver().insert(CONTENT_URI, values);
+            setResult(101);
+
+            imageViewFavorit.setImageResource(R.drawable.ic_star_favorite_24dp);
+        }
+    }
+
+    /*private void favoriteSet() {
         if (isFavorite)
             imageViewFavorit.setImageResource(R.drawable.ic_favorite);
         else
@@ -105,11 +151,11 @@ public class DetailMovieActivity extends AppCompatActivity {
         rilisnya = tvDetailRilisFilm.getText().toString();
         imgPath = ivDetailGambarFilm.toString();
 
-        /*Log.d("cobacoba", "id: " + iniID);
+        *//*Log.d("cobacoba", "id: " + iniID);
         Log.d("cobacoba", "judulnya: " + judulnya);
         Log.d("cobacoba", "desknya: " + desknya);
         Log.d("cobacoba", "rilisnya: " + rilisnya);
-        Log.d("cobacoba", "gambar: " + imgPath);*/
+        Log.d("cobacoba", "gambar: " + imgPath);*//*
         ContentValues cv = new ContentValues();
         cv.put(DatabaseContract.FilmColumns._ID, iniID);
         cv.put(DatabaseContract.FilmColumns.JUDUL, judulnya);
@@ -127,6 +173,6 @@ public class DetailMovieActivity extends AppCompatActivity {
                 null
         );
         Toast.makeText(this, "dihapus", Toast.LENGTH_SHORT).show();
-    }
+    }*/
 
 }

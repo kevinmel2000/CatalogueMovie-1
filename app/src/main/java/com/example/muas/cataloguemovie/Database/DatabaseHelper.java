@@ -6,18 +6,18 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import static android.provider.BaseColumns._ID;
 import static com.example.muas.cataloguemovie.Database.DatabaseContract.FilmColumns.DESKRIPSI;
-import static com.example.muas.cataloguemovie.Database.DatabaseContract.FilmColumns.FAVORITE_FILM;
 import static com.example.muas.cataloguemovie.Database.DatabaseContract.FilmColumns.JUDUL;
 import static com.example.muas.cataloguemovie.Database.DatabaseContract.FilmColumns.RELEASE;
+import static com.example.muas.cataloguemovie.Database.DatabaseContract.FilmColumns.TABLE_FAVORITE_FILM;
 import static com.example.muas.cataloguemovie.Database.DatabaseContract.FilmColumns.URL_POSTER;
 
 
 public class DatabaseHelper extends SQLiteOpenHelper {
-    private static String DATABASE_NAME = "filmfavorit";
+    public static String DATABASE_NAME = "filmfavorit";
 
     private static final int DATABASE_VERSION = 1;
 
-    public static String CREATE_TABLE_FAV_ENG = "create table "+FAVORITE_FILM+
+    public static String CREATE_TABLE_FAV_ENG = "create table "+TABLE_FAVORITE_FILM+
             " ("+_ID+" integer primary key autoincrement, " +
             JUDUL+" text not null, " +
             DESKRIPSI+" text not null, " +
@@ -35,7 +35,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        db.execSQL("DROP TABLE IF EXISTS "+FAVORITE_FILM);
+        db.execSQL("DROP TABLE IF EXISTS "+TABLE_FAVORITE_FILM);
         onCreate(db);
     }
 }

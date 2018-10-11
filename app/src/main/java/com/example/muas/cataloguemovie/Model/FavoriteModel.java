@@ -3,21 +3,13 @@ package com.example.muas.cataloguemovie.Model;
 import android.database.Cursor;
 import android.os.Parcel;
 import android.os.Parcelable;
-
 import com.example.muas.cataloguemovie.Database.DatabaseContract;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 import static android.provider.BaseColumns._ID;
 import static com.example.muas.cataloguemovie.Database.DatabaseContract.getColumnInt;
 import static com.example.muas.cataloguemovie.Database.DatabaseContract.getColumnString;
 
-public class MovieCursorItems implements Parcelable {
+public class FavoriteModel implements Parcelable{
 
     private int id;
     private String poster_path;
@@ -25,9 +17,7 @@ public class MovieCursorItems implements Parcelable {
     private String overview;
     private String release_date;
 
-
-
-    protected MovieCursorItems(Parcel in) {
+    protected FavoriteModel(Parcel in) {
         id = in.readInt();
         poster_path = in.readString();
         original_title = in.readString();
@@ -35,21 +25,29 @@ public class MovieCursorItems implements Parcelable {
         release_date = in.readString();
     }
 
-    public static final Creator<MovieCursorItems> CREATOR = new Creator<MovieCursorItems>() {
+    public static final Creator<FavoriteModel> CREATOR = new Creator<FavoriteModel>() {
         @Override
-        public MovieCursorItems createFromParcel(Parcel in) {
-            return new MovieCursorItems(in);
+        public FavoriteModel createFromParcel(Parcel in) {
+            return new FavoriteModel(in);
         }
 
         @Override
-        public MovieCursorItems[] newArray(int size) {
-            return new MovieCursorItems[size];
+        public FavoriteModel[] newArray(int size) {
+            return new FavoriteModel[size];
         }
     };
 
-    public MovieCursorItems() {
-        super();
+    public FavoriteModel() {
     }
+
+    public FavoriteModel(Cursor cursor){
+        this.id = getColumnInt(cursor, _ID);
+        this.original_title = getColumnString(cursor, DatabaseContract.FilmColumns.JUDUL);
+        this.poster_path = getColumnString(cursor, DatabaseContract.FilmColumns.URL_POSTER);
+        this.release_date = getColumnString(cursor, DatabaseContract.FilmColumns.RELEASE);
+        this.overview = getColumnString(cursor, DatabaseContract.FilmColumns.DESKRIPSI);
+    }
+
 
     public int getId() {
         return id;
@@ -103,14 +101,5 @@ public class MovieCursorItems implements Parcelable {
         dest.writeString(original_title);
         dest.writeString(overview);
         dest.writeString(release_date);
-    }
-
-
-    public MovieCursorItems(Cursor cursor){
-        this.id = getColumnInt(cursor, _ID);
-        this.original_title = getColumnString(cursor, DatabaseContract.FilmColumns.JUDUL);
-        this.overview = getColumnString(cursor, DatabaseContract.FilmColumns.DESKRIPSI);
-        this.release_date = getColumnString(cursor, DatabaseContract.FilmColumns.RELEASE);
-        this.poster_path = getColumnString(cursor, DatabaseContract.FilmColumns.URL_POSTER);
     }
 }
