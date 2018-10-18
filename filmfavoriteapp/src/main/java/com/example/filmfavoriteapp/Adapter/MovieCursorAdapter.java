@@ -3,6 +3,7 @@ package com.example.filmfavoriteapp.Adapter;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
+import android.support.design.widget.Snackbar;
 import android.support.v7.widget.CardView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +12,7 @@ import android.widget.Button;
 import android.widget.CursorAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.filmfavoriteapp.R;
@@ -58,7 +60,7 @@ public class MovieCursorAdapter extends CursorAdapter {
             btnDetail = view.findViewById(R.id.btn_detail);
             btnShare = view.findViewById(R.id.btn_share);
             cardView = view.findViewById(R.id.card_view_detail);
-            cardView.setOnClickListener(new View.OnClickListener() {
+            btnDetail.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Intent i = new Intent(view.getContext(), DetailMovieActivity.class);
@@ -70,6 +72,13 @@ public class MovieCursorAdapter extends CursorAdapter {
                 }
             });
 
+            btnShare.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Toast.makeText(context, "Tombol share clicked!", Toast.LENGTH_SHORT).show();
+                }
+            });
+
             textViewTitle.setText(getColumnString(cursor, JUDUL));
             textViewOverview.setText(getColumnString(cursor, DESKRIPSI));
             textViewRelease.setText(getColumnString(cursor, RELEASE));
@@ -77,5 +86,8 @@ public class MovieCursorAdapter extends CursorAdapter {
                     .placeholder(R.drawable.ic_person_black_24dp)
                     .into(imgPoster);
         }
+
+
     }
+
 }

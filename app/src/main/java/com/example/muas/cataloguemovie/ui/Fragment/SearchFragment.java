@@ -72,10 +72,9 @@ public class SearchFragment extends Fragment implements LoaderManager.LoaderCall
 
         sharedPreferences = getContext().getSharedPreferences(PREFERENCE, Context.MODE_PRIVATE);
         if (sharedPreferences.contains("SPqueryCariMovie")) {
-            String nilaiBmr = sharedPreferences.getString("SPqueryCariMovie", "");
-            Log.d("ini nilainya", "onCreateView: " + nilaiBmr);
+            String keyFilm = sharedPreferences.getString("SPqueryCariMovie", "");
             Bundle bundle = new Bundle();
-            bundle.putString(EXTRAS_MOVIE, nilaiBmr);
+            bundle.putString(EXTRAS_MOVIE, keyFilm);
 
             /*menjalankan metode onCreateLoader()*/
             getLoaderManager().initLoader(0, bundle, this);

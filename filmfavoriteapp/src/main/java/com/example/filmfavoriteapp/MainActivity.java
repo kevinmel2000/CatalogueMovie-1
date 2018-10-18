@@ -45,13 +45,10 @@ public class MainActivity extends AppCompatActivity
 
         navView.setNavigationItemSelectedListener(this);
 
-        /*FavoriteFilmFragment nowPlayingFragment = new FavoriteFilmFragment();
+        FavoriteFilmFragment nowPlayingFragment = new FavoriteFilmFragment();
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.framelayout, nowPlayingFragment);
-        fragmentTransaction.commit();*/
-        /*setupViewPager(viewPager);
-        tabs.setupWithViewPager(viewPager);*/
-
+        fragmentTransaction.commit();
     }
 
     @Override
@@ -102,8 +99,6 @@ public class MainActivity extends AppCompatActivity
             fragmentTransaction.replace(R.id.framelayout, nowPlayingFragment);
             fragmentTransaction.commit();
             // Handle the camera action
-        } else if (id == R.id.nav_up_coming) {
-
         } else if (id == R.id.nav_about) {
             ProfilFragment profilFragment = new ProfilFragment();
             FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
@@ -116,15 +111,4 @@ public class MainActivity extends AppCompatActivity
         return true;
     }
 
-    /*private void setupViewPager(ViewPager viewPager) {
-        try {
-            ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-            adapter.addFragment(new NowPlayingFragment(), getResources().getString(R.string.now_playing));
-            adapter.addFragment(new UpComingFragment(), getResources().getString(R.string.upcoming));
-            //adapter.addFrag(new DetailMovieFragment(), "");
-            viewPager.setAdapter(adapter);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }*/
 }

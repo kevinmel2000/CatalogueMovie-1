@@ -19,8 +19,10 @@ import android.widget.SearchView;
 
 import com.example.muas.cataloguemovie.ui.Fragment.FavoriteFilmFragment;
 import com.example.muas.cataloguemovie.ui.Fragment.NowPlayingFragment;
+import com.example.muas.cataloguemovie.ui.Fragment.ProfilFragment;
 import com.example.muas.cataloguemovie.ui.Fragment.SearchFragment;
 import com.example.muas.cataloguemovie.ui.Fragment.UpComingFragment;
+import com.example.muas.cataloguemovie.ui.activity.SettingActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -55,9 +57,6 @@ public class MainActivity extends AppCompatActivity
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.framelayout, nowPlayingFragment);
         fragmentTransaction.commit();
-        /*setupViewPager(viewPager);
-        tabs.setupWithViewPager(viewPager);*/
-
     }
 
     @Override
@@ -115,6 +114,10 @@ public class MainActivity extends AppCompatActivity
                 Intent mIntent = new Intent(Settings.ACTION_LOCALE_SETTINGS);
                 startActivity(mIntent);
                 return true;
+            case R.id.action_settings:
+                Intent most = new Intent(getApplicationContext(), SettingActivity.class);
+                startActivity(most);
+                return true;
             default:
                 return true;
         }
@@ -138,8 +141,13 @@ public class MainActivity extends AppCompatActivity
             FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
             fragmentTransaction.replace(R.id.framelayout, upComingFragment);
             fragmentTransaction.commit();
+        } else if (id == R.id.nav_up_favorit) {
+            FavoriteFilmFragment favoriteFilmFragment = new FavoriteFilmFragment();
+            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+            fragmentTransaction.replace(R.id.framelayout, favoriteFilmFragment);
+            fragmentTransaction.commit();
         } else if (id == R.id.nav_about) {
-            FavoriteFilmFragment profilFragment = new FavoriteFilmFragment();
+            ProfilFragment profilFragment = new ProfilFragment();
             FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
             fragmentTransaction.replace(R.id.framelayout, profilFragment);
             fragmentTransaction.commit();
@@ -150,15 +158,4 @@ public class MainActivity extends AppCompatActivity
         return true;
     }
 
-    /*private void setupViewPager(ViewPager viewPager) {
-        try {
-            ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-            adapter.addFragment(new NowPlayingFragment(), getResources().getString(R.string.now_playing));
-            adapter.addFragment(new UpComingFragment(), getResources().getString(R.string.upcoming));
-            //adapter.addFrag(new DetailMovieFragment(), "");
-            viewPager.setAdapter(adapter);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }*/
 }

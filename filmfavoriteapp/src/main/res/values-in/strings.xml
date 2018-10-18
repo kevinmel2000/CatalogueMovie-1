@@ -1,14 +1,14 @@
 <resources>
-    <string name="app_name">Muas Favorit Film</string>
+    <string name="app_name">Favorit Film App</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="nav_header_title">Katalog Film</string>
-    <string name="nav_header_subtitle">Katalog Film Aplikasi</string>
+    <string name="nav_header_title">Film Favorit</string>
+    <string name="nav_header_subtitle">Aplikasi Film Favorit</string>
     <string name="nav_header_desc">Navigation header</string>
 
     <!--tambahan-->
     <string name="upcoming">Akan Tayang</string>
-    <string name="now_playing">Sedang diputar</string>
+    <string name="now_playing">Film Favorit</string>
     <string name="search_hint">Cari Film</string>
 
     <string name="detail">Detail</string>

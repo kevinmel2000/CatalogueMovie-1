@@ -41,8 +41,8 @@ public class DetailMovieActivity extends AppCompatActivity {
     /*metode ini digunakan untuk menerima data yang dikirim dari MainActivity
     * berdasarkan RecyclerView yang diklik*/
     private void getIntentData(){
-        String imgPath = "http://image.tmdb.org/t/p/w185"+getIntent().getStringExtra("backdrop");
-        Glide.with(this)
+        String imgPath = "http://image.tmdb.org/t/p/w185" + getIntent().getStringExtra("poster_path");
+        Glide.with(getApplicationContext())
                 .load(imgPath)
                 .into(ivDetailGambarFilm);
         tvDetailJudulFilm.setText(getIntent().getStringExtra("title"));

@@ -9,9 +9,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
-import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,10 +34,8 @@ public class FavoriteFilmFragment extends Fragment implements
 
     Unbinder unbinder;
 
-    @BindView(R.id.recycler_favorite)
-    RecyclerView recyclerViewMovieFavorite;
-    /*@BindView(R.id.lv_movies)
-    ListView lvMovies;*/
+    @BindView(R.id.lv_movies)
+    ListView lvMovies;
 
     MovieCursorAdapter adapterFavorite;
     ArrayList<MovieCursorItems> movieFavoritesArrayList;
@@ -58,16 +53,9 @@ public class FavoriteFilmFragment extends Fragment implements
         View view = inflater.inflate(R.layout.fragment_favorite_film, container, false);
         unbinder = ButterKnife.bind(this, view);
 
-        recyclerViewMovieFavorite = view.findViewById(R.id.recycler_favorite);
+        lvMovies = view.findViewById(R.id.lv_movies);
         adapterFavorite = new MovieCursorAdapter(getContext(), null, true);
-        recyclerViewMovieFavorite.setLayoutManager(new LinearLayoutManager(getContext()));
-//        recyclerViewMovieFavorite.setAdapter(adapterFavorite);
-        recyclerViewMovieFavorite.setHasFixedSize(true);
-        recyclerViewMovieFavorite.setItemAnimator(new DefaultItemAnimator());
-
-        /*lvMovies = view.findViewById(R.id.lv_movies);
-        adapterFavorite = new MovieCursorAdapter(getContext(), null, true);
-        lvMovies.setAdapter(adapterFavorite);*/
+        lvMovies.setAdapter(adapterFavorite);
 
         getActivity().getSupportLoaderManager().initLoader(MOVIE_ID, null, this);
         return view;
@@ -98,13 +86,6 @@ public class FavoriteFilmFragment extends Fragment implements
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
         adapterFavorite.swapCursor(data);
-
-        /*movieFavoritesArrayList = getItem(data);
-        for (MovieCursorItems m : movieFavoritesArrayList) {
-            getFavoriteMovies(m.getId());
-            adapterFavorite.notifyDataSetChanged();
-            Log.v("Matt1", "List"+movieFavoritesArrayList.size());
-        }*/
     }
 
 

@@ -93,7 +93,7 @@ public class FavoriteFilmFragment extends Fragment {
             adapter.notifyDataSetChanged();
 
             if (listFavorite.getCount() == 0) {
-                showSnackbarMessage("Tidak ada data saat ini");
+                showSnackbarMessage("belum ada data saat ini");
             }
         }
     }

@@ -36,9 +36,6 @@ public class NowPlayingFragment extends Fragment implements LoaderManager.Loader
     MovieAdapter movieAdapter;
     private ArrayList<MovieItems> movieList;
 
-    private String BASE_URL_NOW_PLAYING =
-            "https://api.themoviedb.org/3/movie/now_playing?api_key=a91db70d304c21ebc5320b123953a915&language=en-US";
-
     Unbinder unbinder;
 
     public NowPlayingFragment() {

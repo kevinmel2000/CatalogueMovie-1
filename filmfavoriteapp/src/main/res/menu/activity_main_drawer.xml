@@ -8,10 +8,6 @@
             android:id="@+id/nav_play_coming"
             android:icon="@drawable/ic_play_circle_outline_black_24dp"
             android:title="@string/now_playing" />
-        <item
-            android:id="@+id/nav_up_coming"
-            android:icon="@drawable/ic_local_movies_black_24dp"
-            android:title="@string/upcoming" />
     </group>
 
     <item android:title="@string/about">

@@ -30,6 +30,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
     Button btnShare;
     private ArrayList<MovieItems> mData;
     private Context context;
+    public final static String EXTRA_MOVIE = "movie";
 
     public MovieAdapter(Context context) {
         this.context = context;
