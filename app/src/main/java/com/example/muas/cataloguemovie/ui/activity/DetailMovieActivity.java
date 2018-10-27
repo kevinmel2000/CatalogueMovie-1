@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.example.muas.cataloguemovie.Database.DatabaseContract;
 import com.example.muas.cataloguemovie.R;
+import com.flaviofaria.kenburnsview.KenBurnsView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -23,7 +24,7 @@ import static com.example.muas.cataloguemovie.Database.DatabaseContract.CONTENT_
 public class DetailMovieActivity extends AppCompatActivity {
 
     @BindView(R.id.iv_detailGambarFilm)
-    ImageView ivDetailGambarFilm;
+    KenBurnsView ivDetailGambarFilm;
     @BindView(R.id.tv_detailJudulFilm)
     TextView tvDetailJudulFilm;
     @BindView(R.id.tv_detailDeskFilm)
@@ -44,15 +45,19 @@ public class DetailMovieActivity extends AppCompatActivity {
         setContentView(R.layout.activity_detail_movie);
 
 
-        ivDetailGambarFilm = (ImageView) findViewById(R.id.iv_detailGambarFilm);
+        ivDetailGambarFilm = (KenBurnsView) findViewById(R.id.iv_detailGambarFilm);
         tvDetailJudulFilm = (TextView) findViewById(R.id.tv_detailJudulFilm);
         tvDetailDeskFilm = (TextView) findViewById(R.id.tv_detailDeskFilm);
         tvDetailRilisFilm = (TextView) findViewById(R.id.tv_detailRilisFilm);
         fabDetail = (FloatingActionButton) findViewById(R.id.fab_detail);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        judul = getIntent().getStringExtra("title");
+        toolbar.setTitle(judul);
         setSupportActionBar(toolbar);
-        if (getSupportActionBar() != null) getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
 
         /*memanggil metode getIntentData()*/
         getIntentData();

@@ -4,7 +4,6 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="nav_header_title">Katalog Film</string>
     <string name="nav_header_subtitle">Katalog Film Aplikasi</string>
-    <string name="nav_header_desc">Navigation header</string>
 
     <!--tambahan-->
     <string name="upcoming">Akan Tayang</string>
@@ -14,7 +13,6 @@
     <string name="detail">Detail</string>
     <string name="share">Bagikan</string>
 
-    <string name="content_image_film">Gambar Film</string>
     <string name="text_judul_film">Judul</string>
     <string name="text_desk_film">Deskripsi</string>
     <string name="text_rilis_film">Waktu Rilis</string>

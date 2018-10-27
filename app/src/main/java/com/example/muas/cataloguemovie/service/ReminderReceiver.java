@@ -42,7 +42,7 @@ public class ReminderReceiver extends BroadcastReceiver {
                 .addNextIntent(intent)
                 .getPendingIntent(NOTIF_ID_REMINDER, PendingIntent.FLAG_UPDATE_CURRENT);
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context,message)
-                .setSmallIcon(R.drawable.ic_notifications)
+                .setSmallIcon(R.mipmap.ic_moviedb)
                 .setContentTitle(title)
                 .setContentText(message)
                 .setContentIntent(pendingIntent)

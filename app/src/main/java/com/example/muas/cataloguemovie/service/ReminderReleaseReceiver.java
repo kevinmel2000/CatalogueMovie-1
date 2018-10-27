@@ -32,7 +32,6 @@ import cz.msebera.android.httpclient.Header;
 public class ReminderReleaseReceiver extends BroadcastReceiver {
 
     private final int NOTIF_ID_RELEASE = 21;
-    public List<MovieItems> listMovie = new ArrayList<>();
 
     public ReminderReleaseReceiver() {
 

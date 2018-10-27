@@ -20,19 +20,17 @@
             app:expandedTitleTextAppearance="@android:color/transparent"
             app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
-            <ImageView
+            <com.flaviofaria.kenburnsview.KenBurnsView
                 android:id="@+id/iv_detailGambarFilm"
                 android:layout_width="match_parent"
                 android:layout_height="350dp"
-                android:contentDescription="@string/content_image_film"
-                android:scaleType="centerCrop"
-                android:src="@drawable/dicoding"
+                android:scaleType="centerInside"
                 app:layout_collapseMode="parallax" />
 
             <android.support.v7.widget.Toolbar
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
-                android:layout_height="30dp"
+                android:layout_height="50dp"
                 android:title="judul detail"
                 app:layout_collapseMode="pin"
                 app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />

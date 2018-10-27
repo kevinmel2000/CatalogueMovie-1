@@ -7,7 +7,6 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
-import android.util.Log;
 import android.widget.RemoteViews;
 import android.widget.Toast;
 
@@ -16,9 +15,7 @@ import com.example.muas.cataloguemovie.R;
 
 import java.util.Objects;
 
-/**
- * Implementation of App Widget functionality.
- */
+
 public class ImagesBannerWidget extends AppWidgetProvider {
 
     public static final String TOAST_ACTION = "com.example.muas.cataloguemovie.TOAST_ACTION";
@@ -79,11 +76,10 @@ public class ImagesBannerWidget extends AppWidgetProvider {
                 appWidgetId = intent.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID,
                         AppWidgetManager.INVALID_APPWIDGET_ID);
                 viewIndex = intent.getIntExtra(EXTRA_ITEM, 0);
-                String title  = intent.getStringExtra(MovieAdapter.EXTRA_MOVIE);
+                String title = intent.getStringExtra(MovieAdapter.EXTRA_MOVIE);
                 Toast.makeText(context, title, Toast.LENGTH_SHORT).show();
                 break;
             case ON_CLICK_FAVORITE_ACTION: {
-                Log.d("TAG", "onReceive: " + "RECEIVED");
                 int widgetIDs[] = mgr.getAppWidgetIds(new ComponentName(context, ImagesBannerWidget.class));
                 onUpdate(context, mgr, widgetIDs);
                 mgr.notifyAppWidgetViewDataChanged(widgetIDs, R.id.stack_view);

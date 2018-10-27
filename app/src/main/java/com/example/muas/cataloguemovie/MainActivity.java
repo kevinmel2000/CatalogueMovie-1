@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.MenuItemCompat;
@@ -30,6 +31,8 @@ import butterknife.ButterKnife;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+    private static final String KEY_TITLE = "KEY_TITLE";
+    private static final String KEY_FRAGMENT = "KEY_FRAGMENT";
     @BindView(R.id.toolbar)
     Toolbar toolbar;
     @BindView(R.id.nav_view)
@@ -38,6 +41,8 @@ public class MainActivity extends AppCompatActivity
     DrawerLayout drawerLayout;
 
     public static final String PREFERENCE = "dataQuery";
+    String title = "home";
+    private Fragment pageContent = new NowPlayingFragment();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,10 +58,21 @@ public class MainActivity extends AppCompatActivity
 
         navView.setNavigationItemSelectedListener(this);
 
-        NowPlayingFragment nowPlayingFragment = new NowPlayingFragment();
-        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.framelayout, nowPlayingFragment);
-        fragmentTransaction.commit();
+
+        if (savedInstanceState == null) {
+            getSupportFragmentManager().beginTransaction().replace(R.id.framelayout, pageContent).commit();
+        } else {
+            pageContent = getSupportFragmentManager().getFragment(savedInstanceState, KEY_FRAGMENT);
+            getSupportFragmentManager().beginTransaction().replace(R.id.framelayout, pageContent).commit();
+
+        }
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+
+        getSupportFragmentManager().putFragment(outState, KEY_FRAGMENT, pageContent);
+        super.onSaveInstanceState(outState);
     }
 
     @Override
@@ -131,25 +147,25 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_play_coming) {
-            NowPlayingFragment nowPlayingFragment = new NowPlayingFragment();
+            pageContent = new NowPlayingFragment();
             FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-            fragmentTransaction.replace(R.id.framelayout, nowPlayingFragment);
+            fragmentTransaction.replace(R.id.framelayout, pageContent);
             fragmentTransaction.commit();
             // Handle the camera action
         } else if (id == R.id.nav_up_coming) {
-            UpComingFragment upComingFragment = new UpComingFragment();
+            pageContent = new UpComingFragment();
             FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-            fragmentTransaction.replace(R.id.framelayout, upComingFragment);
+            fragmentTransaction.replace(R.id.framelayout, pageContent);
             fragmentTransaction.commit();
         } else if (id == R.id.nav_up_favorit) {
-            FavoriteFilmFragment favoriteFilmFragment = new FavoriteFilmFragment();
+            pageContent = new FavoriteFilmFragment();
             FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-            fragmentTransaction.replace(R.id.framelayout, favoriteFilmFragment);
+            fragmentTransaction.replace(R.id.framelayout, pageContent);
             fragmentTransaction.commit();
         } else if (id == R.id.nav_about) {
-            ProfilFragment profilFragment = new ProfilFragment();
+            pageContent = new ProfilFragment();
             FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-            fragmentTransaction.replace(R.id.framelayout, profilFragment);
+            fragmentTransaction.replace(R.id.framelayout, pageContent);
             fragmentTransaction.commit();
         }
 

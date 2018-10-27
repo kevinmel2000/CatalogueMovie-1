@@ -78,7 +78,7 @@ public class StackRemoteViewsFactory implements RemoteViewsService.RemoteViewsFa
         try {
             currentMovieFavoriteModel = mWidgetItems.get(position);
             bmp = Glide.with(mContext)
-                    .load(DatabaseContract.LINK_IMAGE + currentMovieFavoriteModel.getPoster_path()).asBitmap()
+                    .load(DatabaseContract.URL_IMAGE + currentMovieFavoriteModel.getPoster_path()).asBitmap()
                     .error(new ColorDrawable(mContext.getResources().getColor(R.color.colorPrimaryDark)))
                     .into(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL).get();
 
@@ -86,7 +86,7 @@ public class StackRemoteViewsFactory implements RemoteViewsService.RemoteViewsFa
             extras.putString(MovieAdapter.EXTRA_MOVIE,currentMovieFavoriteModel.getOriginal_title());
 
         } catch (InterruptedException | ExecutionException | IndexOutOfBoundsException e) {
-            Log.d("Widget Load Error", "error");
+
         }
 
         RemoteViews rv = new RemoteViews(mContext.getPackageName(), R.layout.widget_item);

@@ -6,9 +6,6 @@ import android.provider.BaseColumns;
 
 import static com.example.muas.cataloguemovie.Database.DatabaseContract.FilmColumns.TABLE_FAVORITE_FILM;
 
-/**
- * Created by user on 3/5/2018.
- */
 
 public class DatabaseContract {
 
@@ -27,8 +24,6 @@ public class DatabaseContract {
         public static String RELEASE = "rilis";
         public static String URL_POSTER = "poster";
     }
-
-
 
     public static final Uri CONTENT_URI = new Uri.Builder().scheme(SCHEME)
             .authority(AUTHORITY)
@@ -49,7 +44,7 @@ public class DatabaseContract {
     public static final String EXTRA_MESSAGE_RECIEVE = "messageRelease";
     public static final String EXTRA_TYPE_RECIEVE = "typeRelease";
     public static final String TYPE_REMINDER_RECIEVE = "reminderAlarmRelease";
-    public static final String LINK_IMAGE = "http://image.tmdb.org/t/p/w185/";
+    public static final String URL_IMAGE = "http://image.tmdb.org/t/p/w185/";
 
     public static String getColumnString(Cursor cursor, String columnName) {
         return cursor.getString(cursor.getColumnIndex(columnName));
